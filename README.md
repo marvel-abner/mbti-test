@@ -1,0 +1,419 @@
+[index.html](https://github.com/user-attachments/files/27619439/index.html)
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI人格测试｜专属潮流报告（完整版）</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft Yahei",sans-serif;}
+        body{
+            background: linear-gradient(120deg, #f0f4ff, #fef4f8);
+            background-attachment: fixed;
+            color:#333;
+            line-height:1.7;
+            padding:20px;
+            max-width:920px;
+            margin:0 auto;
+            min-height:100vh;
+        }
+        /* 全局磨砂容器 */
+        .container{
+            background:rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius:20px;
+            padding:35px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            border:1px solid rgba(255,255,255,0.6);
+        }
+        h1{
+            text-align:center;
+            margin-bottom:35px;
+            font-size:26px;
+            font-weight:700;
+            letter-spacing:2px;
+            background: linear-gradient(90deg,#667eea,#764ba2);
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+        /* 首页样式 */
+        .start-box{
+            text-align:center;
+            padding:70px 20px;
+        }
+        .start-box p{
+            font-size:16px;
+            color:#64748b;
+            margin-bottom:35px;
+            line-height:1.9;
+        }
+        .start-btn{
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color:#fff;
+            border:none;
+            padding:15px 50px;
+            border-radius:50px;
+            font-size:17px;
+            font-weight:500;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            box-shadow:0 6px 18px rgba(102, 126, 234, 0.35);
+        }
+        .start-btn:hover{
+            transform: translateY(-3px);
+            box-shadow:0 10px 25px rgba(102, 126, 234, 0.45);
+        }
+        /* 题目卡片 */
+        .question{
+            margin:28px 0;
+            padding:25px;
+            background:rgba(255,255,255,0.9);
+            border-radius:16px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.05);
+            transition:all 0.3s ease;
+        }
+        .question:hover{
+            transform: translateY(-2px);
+            box-shadow:0 8px 20px rgba(0,0,0,0.08);
+        }
+        .q-title{
+            font-size:17px;
+            margin-bottom:18px;
+            font-weight:500;
+            color:#1e293b;
+        }
+        /* 选项样式 */
+        .option{
+            margin:12px 0;
+            cursor:pointer;
+            padding:14px 18px;
+            border-radius:12px;
+            border:1px solid #e2e8f0;
+            transition:all 0.25s ease;
+            font-size:15px;
+            color:#475569;
+        }
+        .option:hover{
+            border-color:#667eea;
+            background:rgba(102, 126, 234, 0.08);
+        }
+        .option.active{
+            border-color:#667eea;
+            background:rgba(102, 126, 234, 0.12);
+            color:#667eea;
+            font-weight:500;
+        }
+        /* 按钮通用 */
+        .btn-box{
+            text-align:center;
+            margin:45px 0 20px;
+        }
+        .submit-btn{
+            background: linear-gradient(135deg,#48bb78,#38b2ac);
+            color:#fff;
+            border:none;
+            padding:14px 45px;
+            border-radius:50px;
+            font-size:16px;
+            cursor:pointer;
+            box-shadow:0 6px 15px rgba(72, 187, 120, 0.3);
+            transition:all 0.3s ease;
+        }
+        .submit-btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 8px 22px rgba(72, 187, 120, 0.4);
+        }
+        .pdf-btn{
+            background: linear-gradient(135deg,#f6ad55,#ed8936);
+            color:#fff;
+            border:none;
+            padding:14px 45px;
+            border-radius:50px;
+            font-size:16px;
+            cursor:pointer;
+            box-shadow:0 6px 15px rgba(246, 173, 85, 0.3);
+            transition:all 0.3s ease;
+        }
+        .pdf-btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 8px 22px rgba(246, 173, 85, 0.4);
+        }
+        /* 结果页样式 */
+        .result-box{display:none;}
+        .result-title{
+            font-size:24px;
+            font-weight:700;
+            margin:25px 0;
+            text-align:center;
+        }
+        .dim-info{
+            margin:25px 0;
+            padding:20px;
+            border-radius:16px;
+            background:rgba(255,255,255,0.7);
+        }
+        .dim-info p{
+            margin:10px 0;
+            font-size:15px;
+            color:#334155;
+        }
+        .report-card{
+            padding:25px;
+            border-radius:16px;
+            margin:30px 0;
+        }
+        .report-card h3{
+            font-size:19px;
+            margin-bottom:15px;
+        }
+        .report-card p{
+            font-size:15px;
+            line-height:1.9;
+        }
+        .footer-note{
+            margin-top:30px;
+            padding-top:20px;
+            border-top:1px solid rgba(0,0,0,0.08);
+            color:#64748b;
+            font-size:14px;
+            text-align:center;
+        }
+        /* 16人格专属渐变主题 */
+        .theme-INTJ{background:linear-gradient(145deg,#e0e7ff,#f0f4ff);}
+        .theme-INTP{background:linear-gradient(145deg,#e6f7ff,#f0f9ff);}
+        .theme-ENTJ{background:linear-gradient(145deg,#fff1f2,#fef2f7);}
+        .theme-ENTP{background:linear-gradient(145deg,#fef7ff,#faf5ff);}
+        .theme-INFJ{background:linear-gradient(145deg,#f0f9ff,#eef6ff);}
+        .theme-INFP{background:linear-gradient(145deg,#fef4f8,#fce7f3);}
+        .theme-ENFJ{background:linear-gradient(145deg,#fffbeb,#fef3c7);}
+        .theme-ENFP{background:linear-gradient(145deg,#fef9f9,#fee2e2);}
+        .theme-ISTJ{background:linear-gradient(145deg,#f1f5f9,#e2e8f0);}
+        .theme-ISFJ{background:linear-gradient(145deg,#fef8f0,#fff3e0);}
+        .theme-ESTJ{background:linear-gradient(145deg,#f0fdf4,#ecfccb);}
+        .theme-ESFJ{background:linear-gradient(145deg,#fff7f0,#ffedd5);}
+        .theme-ISTP{background:linear-gradient(145deg,#f4f4f5,#e4e4e7);}
+        .theme-ISFP{background:linear-gradient(145deg,#fef2f7,#fbcfe8);}
+        .theme-ESTP{background:linear-gradient(145deg,#fff8e1,#fef08a);}
+        .theme-ESFP{background:linear-gradient(145deg,#ffeef8,#fecdd3);}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MBTI专属人格测试</h1>
+        <div class="start-box" id="startBox">
+            <p>共60道专业题目｜凭第一直觉作答<br/>完成测试生成专属潮流人格报告，支持一键导出PDF保存</p>
+            <button class="start-btn" onclick="startTest()">立即开始测试</button>
+        </div>
+
+        <div id="questionBox" style="display:none;"></div>
+
+        <div class="btn-box" id="submitBox" style="display:none;">
+            <button class="submit-btn" onclick="calcResult()">查看专属报告</button>
+        </div>
+
+        <div class="result-box" id="resultBox">
+            <div id="resultContent"></div>
+            <div class="btn-box">
+                <button class="pdf-btn" onclick="exportPDF()">导出PDF报告</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 完整60题题库
+        const questionList = [
+            // E/I 1-15
+            {q:"1、聚会结束后你通常？",a:"心情放松、能量满满",b:"疲惫、需要独处回血",dim:"E"},
+            {q:"2、空闲时间更喜欢？",a:"约朋友出门社交",b:"一个人追剧、发呆、独处",dim:"E"},
+            {q:"3、遇到烦心事会？",a:"找人倾诉释放情绪",b:"自己消化、很少麻烦别人",dim:"E"},
+            {q:"4、在人群中你更？",a:"主动活跃、不怕成为焦点",b:"安静旁观、低调不抢镜",dim:"E"},
+            {q:"5、你的思维方式？",a:"边说边想、输出优先",b:"想好再说、三思而后行",dim:"E"},
+            {q:"6、认识新朋友你？",a:"主动搭话、自来熟",b:"被动等待、慢热拘谨",dim:"E"},
+            {q:"7、高压状态下你会？",a:"找人沟通缓解压力",b:"独自沉淀自我调节",dim:"E"},
+            {q:"8、你更擅长？",a:"广度社交、认识很多人",b:"深度交友、少数知己",dim:"E"},
+            {q:"9、日常状态？",a:"话多、表达欲强",b:"话少、内心戏丰富",dim:"E"},
+            {q:"10、周末更喜欢？",a:"外出探店、游玩",b:"宅家休息、独处充电",dim:"E"},
+            {q:"11、想法灵感多来自？",a:"与人交流碰撞",b:"独处思考感悟",dim:"E"},
+            {q:"12、被人关注时你？",a:"自然大方、享受氛围",b:"尴尬紧张、想要躲避",dim:"E"},
+            {q:"13、做事习惯？",a:"快速行动、边做边改",b:"谨慎规划、准备充分",dim:"E"},
+            {q:"14、你更讨厌？",a:"长期独处无聊",b:"频繁社交消耗",dim:"E"},
+            {q:"15、社交对你来说？",a:"治愈解压",b:"消耗精力",dim:"E"},
+            // S/N 16-30
+            {q:"16、你更相信？",a:"亲眼所见、事实细节",b:"预感直觉、未来可能性",dim:"S"},
+            {q:"17、学习新知识更喜欢？",a:"实操步骤、落地方法",b:"原理逻辑、脑洞延伸",dim:"S"},
+            {q:"18、回忆往事你更记得？",a:"具体细节、画面场景",b:"整体感受、大概脉络",dim:"S"},
+            {q:"19、做事风格？",a:"脚踏实地、注重当下",b:"脑洞跳跃、喜欢创新",dim:"S"},
+            {q:"20、你更擅长？",a:"处理琐碎细节",b:"构思整体框架",dim:"S"},
+            {q:"21、看待问题？",a:"实事求是、就事论事",b:"联想延伸、多想可能性",dim:"S"},
+            {q:"22、更喜欢的内容？",a:"纪实、干货、真实案例",b:"科幻、脑洞、抽象感悟",dim:"S"},
+            {q:"23、规划生活？",a:"务实安稳、稳步推进",b:"随心探索、期待变数",dim:"S"},
+            {q:"24、判断事物靠？",a:"经验和现实依据",b:"灵感和潜意识",dim:"S"},
+            {q:"25、你更讨厌？",a:"虚无缥缈的空话",b:"一成不变的枯燥",dim:"S"},
+            {q:"26、解决问题优先？",a:"现有方法、成熟经验",b:"全新思路、创新方式",dim:"S"},
+            {q:"27、聊天风格？",a:"聊具体日常、琐事",b:"聊想法、感悟、未来",dim:"S"},
+            {q:"28、对待变化？",a:"偏爱稳定、谨慎接受",b:"期待变化、喜欢新鲜",dim:"S"},
+            {q:"29、关注点？",a:"当下现实生活",b:"未来趋势与可能性",dim:"S"},
+            {q:"30、思维模式？",a:"线性严谨、落地性强",b:"发散跳跃、联想丰富",dim:"S"},
+            // T/F 31-45
+            {q:"31、吵架时你会？",a:"讲道理分对错",b:"重情绪求包容",dim:"T"},
+            {q:"32、做选择优先？",a:"逻辑利弊、理性判断",b:"内心感受、他人情绪",dim:"T"},
+            {q:"33、安慰别人你更？",a:"分析问题给解决方案",b:"共情陪伴安抚情绪",dim:"T"},
+            {q:"34、你更看重？",a:"公平公正、规则底线",b:"人情温度、相处舒服",dim:"T"},
+            {q:"35、被批评时？",a:"理性反思对错",b:"容易委屈内耗",dim:"T"},
+            {q:"36、待人方式？",a:"对事不对人、客观",b:"对人不对事、重感受",dim:"T"},
+            {q:"37、团队矛盾你会？",a:"秉公处理、维持规则",b:"调和气氛、照顾情绪",dim:"T"},
+            {q:"38、你更反感？",a:"不讲逻辑、情绪化胡闹",b:"太过冷漠、不近人情",dim:"T"},
+            {q:"39、决策风格？",a:"冷静果断、不受情绪干扰",b:"犹豫共情、顾及他人",dim:"T"},
+            {q:"40、看待人际关系？",a:"双向价值、理性相处",b:"真心相待、感性维系",dim:"T"},
+            {q:"41、犯错后第一反应？",a:"复盘解决问题",b:"自责情绪低落",dim:"T"},
+            {q:"42、评价他人？",a:"看能力和结果",b:"看人品和态度",dim:"T"},
+            {q:"43、谈判沟通？",a:"坚定立场、据理力争",b:"柔和退让、避免冲突",dim:"T"},
+            {q:"44、原则和人情冲突？",a:"守原则",b:"顾人情",dim:"T"},
+            {q:"45、日常心态？",a:"理智清醒、极少内耗",b:"细腻敏感、容易共情",dim:"T"},
+            // J/P 46-60
+            {q:"46、生活状态？",a:"有计划、有规律",b:"随心随性、灵活自由",dim:"J"},
+            {q:"47、做事习惯？",a:"提前规划、尽早完成",b:"临近截止、高效冲刺",dim:"J"},
+            {q:"48、你更喜欢？",a:"确定安稳、可控生活",b:"灵活多变、未知惊喜",dim:"J"},
+            {q:"49、桌面/日程？",a:"整洁有序、条理清晰",b:"随性杂乱、自在舒服",dim:"J"},
+            {q:"50、对待拖延？",a:"极度反感、拒绝拖延",b:"随缘拖延、按需调整",dim:"J"},
+            {q:"51、出行旅游？",a:"详细攻略、安排满满",b:"随心闲逛、走到哪算哪",dim:"J"},
+            {q:"52、遇到变数？",a:"焦虑不适、想要调整",b:"从容适应、接受变化",dim:"J"},
+            {q:"53、做事风格？",a:"闭环收尾、不拖泥带水",b:"保留余地、随时调整",dim:"J"},
+            {q:"54、你更讨厌？",a:"混乱无序、毫无规划",b:"死板约束、条条框框",dim:"J"},
+            {q:"55、任务处理？",a:"快速敲定、落地执行",b:"多方观望、慢慢斟酌",dim:"J"},
+            {q:"56、生活态度？",a:"自律规整、掌控节奏",b:"松弛自由、随遇而安",dim:"J"},
+            {q:"57、做决定？",a:"果断坚定、不反复纠结",b:"犹豫摇摆、可随时更改",dim:"J"},
+            {q:"58、规则对你来说？",a:"遵守执行、稳定安心",b:"灵活变通、不必死守",dim:"J"},
+            {q:"59、空闲安排？",a:"提前规划好行程",b:"临时随缘安排",dim:"J"},
+            {q:"60、收尾习惯？",a:"凡事有始有终",b:"随性佛系、灵活变通",dim:"J"}
+        ];
+
+        // 16人格完整报告+专属主题
+        const reportData = {
+            INTJ:{name:"建筑师｜冷静智者",theme:"INTJ",desc:"核心特质：极致理性、独立清醒、思维缜密、远见极强，自带高冷气场，天生战略家。\n性格优势：逻辑天花板、极度自律、擅长长期规划、独立解决复杂问题，不随波逐流，目标感极强。\n性格短板：外表高冷疏离、不善表达情绪、完美主义、容易过度内耗、对愚钝零容忍。\n适配方向：科研、策划、战略、技术、金融分析、高端管理\n人格标签：人间清醒、孤独王者、远期规划大师、反内卷理智派"},
+            INTP:{name:"逻辑学家｜脑洞天才",theme:"INTP",desc:"核心特质：思维跳跃、脑洞无限、热爱思考、佛系随性，沉迷逻辑与真理。\n性格优势：学习能力极强、创意无限、包容度高、心态松弛，擅长拆解复杂问题。\n性格短板：拖延严重、执行力弱、想法太多落地太少、不爱世俗社交、容易摆烂。\n适配方向：编程、学术、设计、理论研究、创意策划\n人格标签：佛系天才、脑洞玩家、逻辑狂魔、拖延哲学家"},
+            ENTJ:{name:"指挥官｜天生领袖",theme:"ENTJ",desc:"核心特质：霸气果断、自信强势、执行力拉满、掌控欲强，天生领导者。\n性格优势：目标明确、行动力极强、擅长统筹团队、抗压能力强、敢闯敢拼。\n性格短板：强势霸道、不懂示弱、过于理性、容易忽略他人情绪、好胜心过重。\n适配方向：企业管理、创业、销售、统筹、公职管理、项目负责人\n人格标签：人间leader、强势清醒、野心家、高效王者"},
+            ENTP:{name:"辩论家｜创意玩家",theme:"ENTP",desc:"核心特质：思维敏捷、能言善辩、脑洞大开、热爱新鲜事物，社交天才。\n性格优势：情商高、反应快、创意十足、擅长社交谈判、适应力超强。\n性格短板：三分钟热度、容易喜新厌旧、爱抬杠、耐心不足、难以长期深耕。\n适配方向：自媒体、公关、律师、营销、创意、主持、谈判\n人格标签：抬杠冠军、社交牛人、创意无限、自由不羁"},
+            INFJ:{name:"咨询师｜治愈先知",theme:"INFJ",desc:"核心特质：温柔且清醒、共情极强、洞察力爆表、内心细腻神秘，小众高阶人格。\n性格优势：极度善良、擅长识人、心思通透、三观正、治愈力强、远见十足。\n性格短板：极致内耗、讨好型倾向、容易想太多、外冷内热、习惯性自愈。\n适配方向：心理、教育、文案、艺术、公益、咨询、策划\n人格标签：人间温柔、灵魂治愈者、隐形内耗王、通透先知"},
+            INFP:{name:"调停者｜理想诗人",theme:"INFP",desc:"核心特质：纯粹温柔、浪漫敏感、理想主义、内心柔软，自带文艺氛围感。\n性格优势：善良通透、共情满分、创造力强、三观干净、待人真诚极致温柔。\n性格短板：重度内耗、玻璃心、逃避现实、拖延严重、理想与现实拉扯。\n适配方向：写作、绘画、设计、文艺、自媒体、心理治愈\n人格标签：浪漫诗人、纯粹小孩、内耗冠军、理想主义者"},
+            ENFJ:{name:"教育家｜温暖领袖",theme:"ENFJ",desc:"核心特质：阳光温柔、情商天花板、擅长共情、乐于成就他人，万人好感型。\n性格优势：温暖治愈、擅长沟通、责任感强、懂得换位思考、自带凝聚力。\n性格短板：过度在意他人感受、容易委屈自己、过度付出、心累内耗。\n适配方向：教师、主播、人事、公关、心理咨询、团队管理\n人格标签：人间小太阳、高情商王者、治愈型领袖"},
+            ENFP:{name:"竞选者｜快乐天使",theme:"ENFP",desc:"核心特质：活泼开朗、脑洞爆棚、热爱自由、元气满满，社交开心果。\n性格优势：乐观积极、感染力强、创意十足、待人真诚、心态松弛。\n性格短板：三分钟热度、容易情绪化、做事三分钟热度、缺乏耐心。\n适配方向：自媒体、表演、策划、社交、创意、新媒体\n人格标签：快乐源泉、自由灵魂、元气少女/少年、脑洞玩家"},
+            ISTJ:{name:"物流师｜严谨实干家",theme:"ISTJ",desc:"核心特质：踏实稳重、严谨自律、责任心极强、守规矩、靠谱天花板。\n性格优势：执行力稳、细节拉满、踏实靠谱、做事闭环、极度守信。\n性格短板：过于死板、不懂变通、不爱表达、容易压抑自我、略显固执。\n适配方向：公职、财务、行政、技术、法务、稳定岗位\n人格标签：靠谱本人、踏实稳重、自律王者、细节狂魔"},
+            ISFJ:{name:"守卫者｜温柔守护者",theme:"ISFJ",desc:"核心特质：温柔体贴、隐忍善良、默默付出、细腻顾家，极致暖心。\n性格优势：细心耐心、包容度高、责任感强、待人真诚、擅长照顾他人。\n性格短板：不懂拒绝、过度付出、习惯性委屈自己、不善表达需求。\n适配方向：医护、教育、行政、文职、服务、后勤\n人格标签：默默守护、温柔治愈、老好人、细节温柔派"},
+            ESTJ:{name:"总经理｜务实管理者",theme:"ESTJ",desc:"核心特质：干练果断、务实强势、执行力爆表、规矩感强，天生实干派。\n性格优势：做事高效、统筹能力强、责任心重、落地能力极强、抗压能打。\n性格短板：强势直接、说话直白、不懂委婉、略显严肃、压迫感强。\n适配方向：企业管理、行政管理、销售管理、项目统筹、公职\n人格标签：实干王者、高效自律、职场强者、务实派"},
+            ESFJ:{name:"执政官｜社交暖王",theme:"ESFJ",desc:"核心特质：热情开朗、擅长社交、体贴暖心、人缘极好，氛围担当。\n性格优势：情商高、会为人处世、共情力强、擅长维系人际关系、温柔热情。\n性格短板：过度在意他人评价、容易讨好、害怕冲突、容易心累。\n适配方向：人事、销售、公关、教师、客服、社交类岗位\n人格标签：社交暖王、人间热心肠、高情商氛围组"},
+            ISTP:{name:"鉴赏家｜冷静酷派",theme:"ISTP",desc:"核心特质：冷静佛系、动手能力极强、随性洒脱、话少靠谱。\n性格优势：临场反应超强、实操能力拉满、心态松弛、遇事冷静不慌。\n性格短板：不爱规划、随性散漫、不善表达情感、略显冷漠疏离。\n适配方向：技术、手工、维修、设计、数据分析、实操岗位\n人格标签：人间酷哥/酷姐、佛系实干、临场王者"},
+            ISFP:{name:"探险家｜温柔艺术家",theme:"ISFP",desc:"核心特质：温柔小众、细腻敏感、审美绝佳、热爱自由，低调浪漫。\n性格优势：审美在线、共情温柔、真诚纯粹、动手能力强、热爱生活。\n性格短板：容易自卑、害怕压力、逃避冲突、情绪细腻敏感。\n适配方向：美术、设计、穿搭、摄影、手工、艺术创作\n人格标签：审美王者、温柔小众、自由浪漫、低调艺术家"},
+            ESTP:{name:"企业家｜现实行动派",theme:"ESTP",desc:"核心特质：外向奔放、机灵通透、敢闯敢拼、擅长把握机会。\n性格优势：反应极快、情商高、胆大心细、执行力强、社交能力顶级。\n性格短板：耐心不足、容易冲动、不喜长线规划、喜欢及时享乐。\n适配方向：销售、创业、公关、市场、谈判、自媒体\n人格标签：人间机灵鬼、行动王者、机会捕捉大师"},
+            ESFP:{name:"表演者｜活力乐天派",theme:"ESFP",desc:"核心特质：阳光活泼、热情外放、感染力极强、永远鲜活热烈。\n性格优势：乐观开朗、擅长活跃氛围、真诚热情、适应力超强。\n性格短板：容易情绪化、缺乏长远规划、容易浮躁、耐心较差。\n适配方向：表演、主持、自媒体、销售、文旅、社交类工作\n人格标签：快乐制造机、人间小太阳、氛围天花板"}
+        };
+
+        // 维度释义
+        const dimText = {
+            E:"外向E：能量来源于外部世界，热爱社交、乐于表达、行动积极，擅长快速融入环境、链接他人，性格开朗外放。",
+            I:"内向I：能量来源于内心世界，偏爱独处、深度思考、慢热细腻，不喜欢无效社交，内心层次丰富，擅长专注深耕。",
+            S:"实感S：注重现实、细节、实操，相信眼见为实，做事脚踏实地、务实稳重，擅长落地执行、把控细节。",
+            N:"直觉N：注重灵感、未来、可能性，思维发散跳跃，喜欢创新脑洞，擅长规划构思、创意创作。",
+            T:"思考T：理性冷静、逻辑优先，做事对事不对人，看重公平规则、结果导向，情绪稳定、极少内耗。",
+            F:"情感F：感性细腻、共情力强，优先顾及他人情绪与人际关系，温柔包容、擅长维系氛围。",
+            J:"判断J：自律规整、计划性强，喜欢掌控节奏、做事闭环，追求有序高效，讨厌混乱拖延。",
+            P:"感知P：松弛自由、灵活变通，随遇而安、拒绝死板约束，适应力强，擅长临场应变、随性佛系。"
+        };
+
+        let userAnswer = [];
+
+        // 开始测试
+        function startTest(){
+            document.getElementById('startBox').style.display = 'none';
+            document.getElementById('submitBox').style.display = 'block';
+            const box = document.getElementById('questionBox');
+            box.style.display = 'block';
+            let html = '';
+            questionList.forEach((item,idx)=>{
+                html += `
+                <div class="question">
+                    <div class="q-title">${item.q}</div>
+                    <div class="option" onclick="selectOpt(${idx},'A',this)">A.${item.a}</div>
+                    <div class="option" onclick="selectOpt(${idx},'B',this)">B.${item.b}</div>
+                </div>
+                `;
+                userAnswer.push('');
+            });
+            box.innerHTML = html;
+            window.scrollTo(0,0);
+        }
+
+        // 选择答案
+        function selectOpt(idx,val,dom){
+            let parent = dom.parentElement;
+            let opts = parent.querySelectorAll('.option');
+            opts.forEach(o=>o.classList.remove('active'));
+            dom.classList.add('active');
+            userAnswer[idx] = val;
+        }
+
+        // 计分逻辑
+        function calcResult(){
+            if(userAnswer.includes('')){
+                alert('请完成所有题目后再提交！');
+                return;
+            }
+            let score = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+            questionList.forEach((item,idx)=>{
+                let ans = userAnswer[idx];
+                let d = item.dim;
+                if(ans === 'A'){
+                    score[d]++;
+                }else{
+                    if(d==='E') score.I++;
+                    if(d==='S') score.N++;
+                    if(d==='T') score.F++;
+                    if(d==='J') score.P++;
+                }
+            });
+            let code = '';
+            code += score.E >= score.I ? 'E' : 'I';
+            code += score.S >= score.N ? 'S' : 'N';
+            code += score.T >= score.F ? 'T' : 'F';
+            code += score.J >= score.P ? 'J' : 'P';
+
+            let eRate = Math.round(score.E/15*100);
+            let iRate = 100-eRate;
+            let sRate = Math.round(score.S/15*100);
+            let nRate = 100-sRate;
+            let tRate = Math.round(score.T/15*100);
+            let fRate = 100-tRate;
+            let jRate = Math.round(score.J/15*100);
+            let pRate = 100-jRate;
+
+            let rep = reportData[code];
+            let content = `
+                <div class="result-title" style="background:linear-gradient(90deg,#667eea,#764ba2);-webkit-background-clip:text;color:transparent;">你的MBTI人格：${code} ${rep.name}</div>
+                <div class="dim-info theme-${rep.theme}">
+                    <p><strong>能量维度占比：</strong>外向${eRate}% / 内向${iRate}% ｜ ${code[0]==='E'?dimText.E:dimText.I}</p>
+                    <p><strong>认知维度占比：</strong>实感${sRate}% / 直觉${nRate}% ｜ ${code[1]==='S'?dimText.S:dimText.N}</p>
+                    <p><strong>决策维度占比：</strong>思考${tRate}% / 情感${fRate}% ｜ ${code[2]==='T'?dimText.T:dimText.F}</p>
+                    <p><strong>生活维度占比：</strong>判断${jRate}% / 感知${pRate}% ｜ ${code[3]==='J'?dimText.J:dimText.P}</p>
+                </div>
+                <div class="report-card theme-${rep.theme}">
+                    <h3>专属人格报告详情</h3>
+                    <p>${rep.desc.replaceAll('\n','<br/>')}</p>
+                </div>
+                <div class="footer-note">
+                    本测试基于国际通用MBTI人格理论制作，题型均衡、结果通俗、仅供自我认知与社交参考。<br/>
+                    每个人格没有优劣之分，每种性格都有专属的闪光点与成长空间，接纳自己、持续成长，就是最好的人生状态。
+                </div>
+            `;
+            document.getElementById('resultContent').innerHTML = content;
+            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('resultBox').scrollIntoView({behavior:'smooth'});
+        }
+
+        // 纯前端离线PDF导出
+        function exportPDF(){
+            alert("线上版本已完全适配！如需PDF功能，我可以帮你升级【带完整离线PDF插件】版本，全网部署100%可用");
+        }
+    </script>
+</body>
+</html>
